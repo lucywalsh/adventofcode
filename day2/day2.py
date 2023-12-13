@@ -41,9 +41,28 @@ def part_one(lines):
         if check_game(games[i], 12, 13, 14):
             total+=i+1
     print("Total:", total)
+
+def find_min_cubes(game, colour):
+    min_cubes = 0
+    for turn in game:
+        if colour in turn and int(turn[colour]) > min_cubes:
+            min_cubes = int(turn[colour])
+    return min_cubes
+
+def part_two(lines):
+    games = parse_lines(lines)
+    powers = []
+    for game in games:
+        min_red = find_min_cubes(game, 'red')
+        min_blue = find_min_cubes(game, 'blue')
+        min_green = find_min_cubes(game, 'green')
+        power = min_red*min_blue*min_green
+        powers.append(power)
+    print("Total = ", sum(powers))
         
+    
 
 if __name__ == "__main__":
     with open('./day2-input.txt','r') as file:
         lines = [line.rstrip() for line in file]
-    part_one(lines)
+    part_two(lines)
